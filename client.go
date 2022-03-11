@@ -5,6 +5,7 @@ import (
     "fmt"
     "strings"
     "github.com/imroc/req/v3"
+    "github.com/sonh/qs"
 )
 
 type Client struct {
@@ -27,8 +28,16 @@ func isContentType(t string, expected string) bool {
     return t == expected
 }
 
-func (c *Client) send(method string, path string) (*req.Response, error) {
+func (c *Client) send(method string, path string, params interface{}) (*req.Response, error) {
     r := req.C().R()
+
+    if params != nil {
+        query, err := qs.NewEncoder().Values(params)
+        if err != nil {
+            return nil, err
+        }
+        r.SetQueryString(query.Encode())
+    }
 
     if len(c.Host) > 0 {
         r.SetHeader("Host", c.Host)
@@ -61,7 +70,7 @@ func (c *Client) GetHealth() (Health, error) {
 
     var health Health
 
-    r, err := c.send("GET", "/health")
+    r, err := c.send("GET", "/health", nil)
     if err == nil {
 
         // Set HTTPStatusCode
@@ -71,4 +80,22 @@ func (c *Client) GetHealth() (Health, error) {
         err = r.Unmarshal(&health)
     }
     return health, err
+}
+
+//  GetAssets - Fetches "/attomicaassets/v1/assets" from API
+// ---------------------------------------------------------
+func (c *Client) GetAssets(params AssetsRequestParams) (AssetsResponse, error) {
+
+    var assets AssetsResponse
+
+    r, err := c.send("GET", "/attomicaassets/v1/assets", params)
+    if err == nil {
+
+        // Set HTTPStatusCode
+        assets.HTTPStatusCode = r.StatusCode
+
+        // Parse json
+        err = r.Unmarshal(&assets)
+    }
+    return assets, err
 }
