@@ -82,6 +82,24 @@ func (c *Client) GetHealth() (Health, error) {
     return health, err
 }
 
+//  GetAsset - Fetches "/attomicaassets/v1/assets/{asset_id}" from API
+// ---------------------------------------------------------
+func (c *Client) GetAsset(asset_id string) (AssetResponse, error) {
+
+    var asset AssetResponse
+
+    r, err := c.send("GET", "/attomicaassets/v1/assets/" + asset_id, nil)
+    if err == nil {
+
+        // Set HTTPStatusCode
+        asset.HTTPStatusCode = r.StatusCode
+
+        // Parse json
+        err = r.Unmarshal(&asset)
+    }
+    return asset, err
+}
+
 //  GetAssets - Fetches "/attomicaassets/v1/assets" from API
 // ---------------------------------------------------------
 func (c *Client) GetAssets(params AssetsRequestParams) (AssetsResponse, error) {

@@ -59,6 +59,11 @@ type Health struct {
 
 // Assets request/response
 
+type AssetResponse struct {
+    APIResponse
+    Data Asset
+}
+
 type AssetsRequestParams struct {
     CollectionName string           `qs:"collection_name,omitempty"`
     CollectionBlacklist []string    `qs:"collection_blacklist,omitempty"`

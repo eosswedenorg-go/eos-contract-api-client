@@ -46,6 +46,26 @@ func (h *Health) UnmarshalJSON(s []byte) error {
 	return nil
 }
 
+func (a *AssetResponse) UnmarshalJSON(s []byte) error {
+
+    var r struct {
+        S bool       `json:"success"`
+        D Asset      `json:"data"`
+        T int64      `json:"query_time"`
+    }
+
+	err := json.Unmarshal(s, &r)
+	if err != nil {
+		return err
+	}
+
+    a.Success = r.S
+    a.Data = r.D
+    a.QueryTime = fromTS(r.T)
+
+	return nil
+}
+
 func (a *AssetsResponse) UnmarshalJSON(s []byte) error {
 
     var r struct {
