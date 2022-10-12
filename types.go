@@ -12,6 +12,10 @@ type HTTPResponse struct {
     HTTPStatusCode int
 }
 
+func (resp *HTTPResponse) IsError() bool {
+    return resp.HTTPStatusCode > 399
+}
+
 type APIError struct {
     Success null.Bool    `json:"success"`
     Message null.String  `json:"message"`
