@@ -147,6 +147,21 @@ func TestAPIError(t *testing.T) {
 }
 
 
+func TestErrorNoPayload(t *testing.T) {
+
+    var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+        res.Header().Add("Content-type", "application/json")
+        res.WriteHeader(200)
+        res.Write([]byte{})
+    }))
+
+    client := New(srv.URL)
+
+    _, err := client.GetHealth()
+
+    assert.EqualError(t, err, "unexpected end of JSON input")
+}
+
 func TestHostHeader(t *testing.T) {
 
     var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
