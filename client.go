@@ -48,8 +48,8 @@ func (c *Client) send(method string, path string) (*req.Response, error) {
 
     if resp.IsError() {
         r_err := APIError{}
-        if resp.Unmarshal(&r_err) == nil && r_err.Success == false {
-            return nil, fmt.Errorf("API Error: %s", r_err.Message)
+        if resp.Unmarshal(&r_err) == nil && r_err.Success.Valid && !r_err.Success.Bool {
+            return nil, fmt.Errorf("API Error: %s", r_err.Message.String)
         }
         return nil, errors.New(resp.Status)
     }

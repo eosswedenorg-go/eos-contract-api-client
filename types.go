@@ -3,6 +3,7 @@ package eos_contract_api_client
 
 import (
     "time"
+    null "gopkg.in/guregu/null.v4"
 )
 
 // HTTP
@@ -12,8 +13,8 @@ type HTTPResponse struct {
 }
 
 type APIError struct {
-    Success bool    `json:"success"`
-    Message string  `json:"message"`
+    Success null.Bool    `json:"success"`
+    Message null.String  `json:"message"`
 }
 
 // Health
