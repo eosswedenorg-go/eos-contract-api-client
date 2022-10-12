@@ -156,9 +156,10 @@ func TestAPIErrorEmptyPayload(t *testing.T) {
 
     client := New(srv.URL)
 
-    _, err := client.GetHealth()
+    health, err := client.GetHealth()
 
-    assert.EqualError(t, err, "404 Not Found")
+    assert.NoError(t, err)
+    assert.Equal(t, 404, health.HTTPStatusCode)
 }
 
 func TestErrorNoPayload(t *testing.T) {

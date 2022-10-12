@@ -4,7 +4,6 @@ package eos_contract_api_client
 import (
     "fmt"
     "strings"
-    "errors"
     "github.com/imroc/req/v3"
 )
 
@@ -51,7 +50,6 @@ func (c *Client) send(method string, path string) (*req.Response, error) {
         if resp.Unmarshal(&r_err) == nil && r_err.Success.Valid && !r_err.Success.Bool {
             return nil, fmt.Errorf("API Error: %s", r_err.Message.String)
         }
-        return nil, errors.New(resp.Status)
     }
 
     return resp, err
