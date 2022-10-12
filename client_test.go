@@ -143,7 +143,7 @@ func TestAPIError(t *testing.T) {
 
     _, err := client.GetHealth()
 
-    assert.Error(t, err)
+    assert.EqualError(t, err, "API Error: Some internal error")
 }
 
 
