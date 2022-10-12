@@ -146,6 +146,20 @@ func TestAPIError(t *testing.T) {
     assert.EqualError(t, err, "API Error: Some internal error")
 }
 
+func TestAPIErrorEmptyPayload(t *testing.T) {
+
+    var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+        res.Header().Add("Content-type", "application/json")
+        res.WriteHeader(404)
+        res.Write([]byte(`{}`))
+    }))
+
+    client := New(srv.URL)
+
+    _, err := client.GetHealth()
+
+    assert.EqualError(t, err, "404 Not Found")
+}
 
 func TestErrorNoPayload(t *testing.T) {
 
