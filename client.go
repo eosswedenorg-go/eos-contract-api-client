@@ -41,7 +41,7 @@ func (c *Client) send(method string, path string) (*req.Response, error) {
 
     t := resp.GetContentType()
     if ! isContentType(t, "application/json") {
-        return nil, fmt.Errorf("Invalid content-type '%s', expected 'application/json'", t)
+        return nil, fmt.Errorf("invalid content-type '%s', expected 'application/json'", t)
     }
 
     r_err := APIError{}

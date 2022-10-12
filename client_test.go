@@ -169,5 +169,5 @@ func TestInvalidContentType(t *testing.T) {
 
     _, err := client.send("GET", "/")
 
-    assert.EqualError(t, err, "Invalid content-type 'some-type', expected 'application/json'")
+    assert.EqualError(t, err, "invalid content-type 'some-type', expected 'application/json'")
 }
