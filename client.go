@@ -82,7 +82,7 @@ func (c *Client) GetHealth() (Health, error) {
     return health, err
 }
 
-//  GetAsset - Fetches "/attomicaassets/v1/assets/{asset_id}" from API
+//  GetAsset - Fetches "/atomicassets/v1/assets/{asset_id}" from API
 // ---------------------------------------------------------
 func (c *Client) GetAsset(asset_id string) (AssetResponse, error) {
 
@@ -100,7 +100,7 @@ func (c *Client) GetAsset(asset_id string) (AssetResponse, error) {
     return asset, err
 }
 
-//  GetAssets - Fetches "/attomicaassets/v1/assets" from API
+//  GetAssets - Fetches "/atomicassets/v1/assets" from API
 // ---------------------------------------------------------
 func (c *Client) GetAssets(params AssetsRequestParams) (AssetsResponse, error) {
 
