@@ -13,7 +13,7 @@ type HTTPResponse struct {
 }
 
 func (resp *HTTPResponse) IsError() bool {
-    return resp.HTTPStatusCode > 399
+    return resp.HTTPStatusCode == 0 || resp.HTTPStatusCode > 399
 }
 
 type APIError struct {
