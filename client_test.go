@@ -101,7 +101,7 @@ var asset1 = Asset{
     BackedTokens: []Token{},
 }
 
-func TestHTTPSendError(t *testing.T) {
+func TestClient_SendError(t *testing.T) {
 
     client := New("http://0.0.0.0:8080")
 
@@ -110,7 +110,7 @@ func TestHTTPSendError(t *testing.T) {
     assert.EqualError(t, err, "Get \"http://0.0.0.0:8080/\": dial tcp 0.0.0.0:8080: connect: connection refused")
 }
 
-func TestHTTPSendEncodeParametersFail(t *testing.T) {
+func TestClient_SendEncodeParametersFail(t *testing.T) {
 
     client := Client{}
 
@@ -119,7 +119,7 @@ func TestHTTPSendEncodeParametersFail(t *testing.T) {
     assert.EqualError(t, err, "expects struct input, got string")
 }
 
-func TestGetHealth(t *testing.T) {
+func TestClient_GetHealth(t *testing.T) {
 
     var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
         if req.URL.String() == "/health" {
@@ -180,7 +180,7 @@ func TestGetHealth(t *testing.T) {
     assert.Equal(t, time.Time(time.Date(2022, time.February, 20, 16, 32, 51, 500, time.UTC)), h.Data.Chain.HeadTime)
 }
 
-func TestGetHealthFailed(t *testing.T) {
+func TestClient_GetHealthFailed(t *testing.T) {
 
     var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
         if req.URL.String() == "/health" {
@@ -235,7 +235,7 @@ func TestGetHealthFailed(t *testing.T) {
     assert.Equal(t, time.Unix(0, 0).UTC(), h.Data.Chain.HeadTime)
 }
 
-func TestAPIError(t *testing.T) {
+func TestClient_APIError(t *testing.T) {
 
     var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
         payload := `{
@@ -255,7 +255,7 @@ func TestAPIError(t *testing.T) {
     assert.EqualError(t, err, "API Error: Some internal error")
 }
 
-func TestAPIErrorEmptyPayload(t *testing.T) {
+func TestClient_APIErrorEmptyPayload(t *testing.T) {
 
     var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
         res.Header().Add("Content-type", "application/json")
@@ -271,7 +271,7 @@ func TestAPIErrorEmptyPayload(t *testing.T) {
     assert.Equal(t, 404, health.HTTPStatusCode)
 }
 
-func TestErrorNoPayload(t *testing.T) {
+func TestClient_ErrorNoPayload(t *testing.T) {
 
     var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
         res.Header().Add("Content-type", "application/json")
@@ -286,7 +286,7 @@ func TestErrorNoPayload(t *testing.T) {
     assert.EqualError(t, err, "unexpected end of JSON input")
 }
 
-func TestHostHeader(t *testing.T) {
+func TestClient_HostHeader(t *testing.T) {
 
     var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
         assert.Equal(t, "my-custom-host", req.Host)
@@ -298,7 +298,7 @@ func TestHostHeader(t *testing.T) {
     client.send("GET", "/", nil)
 }
 
-func TestInvalidContentType(t *testing.T) {
+func TestClient_InvalidContentType(t *testing.T) {
 
     var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
         res.Header().Add("Content-type", "some-type")
@@ -311,7 +311,7 @@ func TestInvalidContentType(t *testing.T) {
     assert.EqualError(t, err, "invalid content-type 'some-type', expected 'application/json'")
 }
 
-func TestGetAsset(t *testing.T) {
+func TestClient_GetAsset(t *testing.T) {
 
     var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
         if req.URL.String() == "/attomicaassets/v1/assets/1099667509880" {
@@ -437,7 +437,7 @@ func TestGetAsset(t *testing.T) {
     assert.Equal(t, asset1, a.Data)
 }
 
-func TestGetAssets(t *testing.T) {
+func TestClient_GetAssets(t *testing.T) {
 
     var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
         if req.URL.String() == "/attomicaassets/v1/assets?before=100&is_transferable=true&schema_name=test" {
