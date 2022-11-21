@@ -101,6 +101,15 @@ var asset1 = Asset{
     BackedTokens: []Token{},
 }
 
+func TestHTTPSendError(t *testing.T) {
+
+    client := New("http://0.0.0.0:8080")
+
+    _, err := client.send("GET", "/", nil)
+
+    assert.EqualError(t, err, "Get \"http://0.0.0.0:8080/\": dial tcp 0.0.0.0:8080: connect: connection refused")
+}
+
 func TestGetHealth(t *testing.T) {
 
     var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
