@@ -29,16 +29,16 @@ type APIError struct {
 
 type APIResponse struct {
     HTTPResponse
-    Success bool
-    QueryTime time.Time
+    Success bool        `json:"success"`
+    QueryTime UnixTime  `json:"query_time"`
 }
 
 // Health
 
 type ChainHealth struct {
-    Status      string
-    HeadBlock   int64
-    HeadTime    time.Time
+    Status      string      `json:"status"`
+    HeadBlock   int64       `json:"head_block"`
+    HeadTime    UnixTime    `json:"head_time"`
 }
 
 type RedisHealth struct {
