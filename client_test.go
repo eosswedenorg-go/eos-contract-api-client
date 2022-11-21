@@ -163,7 +163,7 @@ func TestClient_GetHealth(t *testing.T) {
     assert.Equal(t, 200, h.HTTPStatusCode)
 
     assert.True(t, h.Success)
-    assert.Equal(t, time.Time(time.Date(2022, time.February, 20, 16, 32, 52, 67, time.UTC)), h.QueryTime)
+    assert.Equal(t, time.Time(time.Date(2022, time.February, 20, 16, 32, 52, 67, time.UTC)), h.QueryTime.Time())
 
     // Data
     assert.Equal(t, "1.0.0", h.Data.Version)
@@ -177,7 +177,7 @@ func TestClient_GetHealth(t *testing.T) {
     // Chain
     assert.Equal(t, "OK", h.Data.Chain.Status)
     assert.Equal(t, int64(167836035), h.Data.Chain.HeadBlock)
-    assert.Equal(t, time.Time(time.Date(2022, time.February, 20, 16, 32, 51, 500, time.UTC)), h.Data.Chain.HeadTime)
+    assert.Equal(t, time.Time(time.Date(2022, time.February, 20, 16, 32, 51, 500, time.UTC)), h.Data.Chain.HeadTime.Time())
 }
 
 func TestClient_GetHealthFailed(t *testing.T) {
@@ -217,7 +217,7 @@ func TestClient_GetHealthFailed(t *testing.T) {
     assert.Equal(t, 200, h.HTTPStatusCode)
 
     assert.True(t, h.Success)
-    assert.Equal(t, time.Time(time.Date(2022, time.February, 20, 16, 32, 52, 67, time.UTC)), h.QueryTime)
+    assert.Equal(t, time.Time(time.Date(2022, time.February, 20, 16, 32, 52, 67, time.UTC)), h.QueryTime.Time())
 
     // Data
     assert.Equal(t, "1.0.0", h.Data.Version)
@@ -232,7 +232,7 @@ func TestClient_GetHealthFailed(t *testing.T) {
     assert.Equal(t, "ERROR", h.Data.Chain.Status)
     assert.Equal(t, int64(0), h.Data.Chain.HeadBlock)
 
-    assert.Equal(t, time.Unix(0, 0).UTC(), h.Data.Chain.HeadTime)
+    assert.Equal(t, time.Unix(0, 0).UTC(), h.Data.Chain.HeadTime.Time())
 }
 
 func TestClient_APIError(t *testing.T) {
@@ -434,7 +434,7 @@ func TestClient_GetAsset(t *testing.T) {
     require.NoError(t, err)
     assert.Equal(t, 200, a.HTTPStatusCode)
     assert.True(t, a.Success)
-    assert.Equal(t, time.Time(time.Date(2022, time.March, 11, 16, 36, 54, 598, time.UTC)), a.QueryTime)
+    assert.Equal(t, time.Time(time.Date(2022, time.March, 11, 16, 36, 54, 598, time.UTC)), a.QueryTime.Time())
     assert.Equal(t, asset1, a.Data)
 }
 
@@ -562,7 +562,7 @@ func TestClient_GetAssets(t *testing.T) {
     require.NoError(t, err)
     assert.Equal(t, 200, a.HTTPStatusCode)
     assert.True(t, a.Success)
-    assert.Equal(t, time.Time(time.Date(2022, time.March, 11, 11, 7, 50, 918, time.UTC)), a.QueryTime)
+    assert.Equal(t, time.Time(time.Date(2022, time.March, 11, 11, 7, 50, 918, time.UTC)), a.QueryTime.Time())
 
     expected := []Asset{asset1}
 
