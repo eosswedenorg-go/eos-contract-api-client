@@ -314,116 +314,117 @@ func TestClient_InvalidContentType(t *testing.T) {
 func TestClient_GetAsset(t *testing.T) {
 
     var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-        if req.URL.String() == "/attomicaassets/v1/assets/1099667509880" {
-            payload := `{
-              "success": true,
-              "data": {
-                "contract": "atomicassets",
-                "asset_id": "1099667509880",
-                "owner": "farmersworld",
+
+        assert.Equal(t, "/attomicaassets/v1/assets/1099667509880", req.URL.String())
+
+        payload := `{
+            "success": true,
+            "data": {
+            "contract": "atomicassets",
+            "asset_id": "1099667509880",
+            "owner": "farmersworld",
+            "is_transferable": true,
+            "is_burnable": true,
+            "collection": {
+                "collection_name": "farmersworld",
+                "name": "Farmers World",
+                "img": "QmX79zrJsk4DbWQ3krgu41pX3fdvEvWjkMXiNCKpxFXSgj",
+                "author": ".jieg.wam",
+                "allow_notify": true,
+                "authorized_accounts": [
+                ".jieg.wam",
+                "farmersworld",
+                "atomicdropsx",
+                "atomicpacksx",
+                "neftyblocksd"
+                ],
+                "notify_accounts": [
+                "atomicdropsx"
+                ],
+                "market_fee": 0.05,
+                "created_at_block": "123762633",
+                "created_at_time": "1623323058000"
+            },
+            "schema": {
+                "schema_name": "memberships",
+                "format": [
+                {
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "name": "img",
+                    "type": "image"
+                },
+                {
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "name": "type",
+                    "type": "string"
+                },
+                {
+                    "name": "rarity",
+                    "type": "string"
+                },
+                {
+                    "name": "level",
+                    "type": "uint8"
+                }
+                ],
+                "created_at_block": "136880914",
+                "created_at_time": "1629887699000"
+            },
+            "template": {
+                "template_id": "260629",
+                "max_supply": "0",
                 "is_transferable": true,
                 "is_burnable": true,
-                "collection": {
-                  "collection_name": "farmersworld",
-                  "name": "Farmers World",
-                  "img": "QmX79zrJsk4DbWQ3krgu41pX3fdvEvWjkMXiNCKpxFXSgj",
-                  "author": ".jieg.wam",
-                  "allow_notify": true,
-                  "authorized_accounts": [
-                    ".jieg.wam",
-                    "farmersworld",
-                    "atomicdropsx",
-                    "atomicpacksx",
-                    "neftyblocksd"
-                  ],
-                  "notify_accounts": [
-                    "atomicdropsx"
-                  ],
-                  "market_fee": 0.05,
-                  "created_at_block": "123762633",
-                  "created_at_time": "1623323058000"
-                },
-                "schema": {
-                  "schema_name": "memberships",
-                  "format": [
-                    {
-                      "name": "name",
-                      "type": "string"
-                    },
-                    {
-                      "name": "img",
-                      "type": "image"
-                    },
-                    {
-                      "name": "description",
-                      "type": "string"
-                    },
-                    {
-                      "name": "type",
-                      "type": "string"
-                    },
-                    {
-                      "name": "rarity",
-                      "type": "string"
-                    },
-                    {
-                      "name": "level",
-                      "type": "uint8"
-                    }
-                  ],
-                  "created_at_block": "136880914",
-                  "created_at_time": "1629887699000"
-                },
-                "template": {
-                  "template_id": "260629",
-                  "max_supply": "0",
-                  "is_transferable": true,
-                  "is_burnable": true,
-                  "issued_supply": "112195",
-                  "immutable_data": {
-                    "img": "QmZWg1mP2UNcSwhrYNVqjk16BnhcWCz3oAva8BfiTNB3J4",
-                    "name": "Silver Member",
-                    "type": "Wood",
-                    "level": 2,
-                    "rarity": "Uncommon",
-                    "description": "This is a member card powered by Wood. When used by the farmer, it will increase the power and luck of the wood mining tools, and can mine the Farmer Coin that has been lost since ancient times."
-                  },
-                  "created_at_time": "1629888476000",
-                  "created_at_block": "136882467"
-                },
-                "mutable_data": {
-                    "asdf": "1234"
-                },
+                "issued_supply": "112195",
                 "immutable_data": {
-                    "asdx": "4321"
+                "img": "QmZWg1mP2UNcSwhrYNVqjk16BnhcWCz3oAva8BfiTNB3J4",
+                "name": "Silver Member",
+                "type": "Wood",
+                "level": 2,
+                "rarity": "Uncommon",
+                "description": "This is a member card powered by Wood. When used by the farmer, it will increase the power and luck of the wood mining tools, and can mine the Farmer Coin that has been lost since ancient times."
                 },
-                "template_mint": "4433",
-                "backed_tokens": [],
-                "burned_by_account": null,
-                "burned_at_block": null,
-                "burned_at_time": null,
-                "updated_at_block": "171080009",
-                "updated_at_time": "1646996870500",
-                "transferred_at_block": "171080009",
-                "transferred_at_time": "1646996870500",
-                "minted_at_block": "171080009",
-                "minted_at_time": "1646996870500",
-                "data": {
-                  "img": "QmZWg1mP2UNcSwhrYNVqjk16BnhcWCz3oAva8BfiTNB3J4",
-                  "name": "Silver Member",
-                  "type": "Wood",
-                  "level": 2,
-                  "rarity": "Uncommon",
-                  "description": "This is a member card powered by Wood. When used by the farmer, it will increase the power and luck of the wood mining tools, and can mine the Farmer Coin that has been lost since ancient times."
-                },
-                "name": "Silver Member"
-              },
-              "query_time": 1647016614598
-            }`
+                "created_at_time": "1629888476000",
+                "created_at_block": "136882467"
+            },
+            "mutable_data": {
+                "asdf": "1234"
+            },
+            "immutable_data": {
+                "asdx": "4321"
+            },
+            "template_mint": "4433",
+            "backed_tokens": [],
+            "burned_by_account": null,
+            "burned_at_block": null,
+            "burned_at_time": null,
+            "updated_at_block": "171080009",
+            "updated_at_time": "1646996870500",
+            "transferred_at_block": "171080009",
+            "transferred_at_time": "1646996870500",
+            "minted_at_block": "171080009",
+            "minted_at_time": "1646996870500",
+            "data": {
+                "img": "QmZWg1mP2UNcSwhrYNVqjk16BnhcWCz3oAva8BfiTNB3J4",
+                "name": "Silver Member",
+                "type": "Wood",
+                "level": 2,
+                "rarity": "Uncommon",
+                "description": "This is a member card powered by Wood. When used by the farmer, it will increase the power and luck of the wood mining tools, and can mine the Farmer Coin that has been lost since ancient times."
+            },
+            "name": "Silver Member"
+            },
+            "query_time": 1647016614598
+        }`
 
-            res.Header().Add("Content-type", "application/json; charset=utf-8")
-            res.Write([]byte(payload))
-        }
+        res.Header().Add("Content-type", "application/json; charset=utf-8")
+        res.Write([]byte(payload))
     }))
 
     client := New(srv.URL)
@@ -440,8 +441,10 @@ func TestClient_GetAsset(t *testing.T) {
 func TestClient_GetAssets(t *testing.T) {
 
     var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-        if req.URL.String() == "/attomicaassets/v1/assets?before=100&is_transferable=true&schema_name=test" {
-            payload := `{
+
+        assert.Equal(t, "/attomicaassets/v1/assets?before=100&is_transferable=true&schema_name=test", req.URL.String())
+
+        payload := `{
   "success": true,
   "data": [
     {
@@ -548,9 +551,8 @@ func TestClient_GetAssets(t *testing.T) {
     "query_time":1646996870918
     }`
 
-            res.Header().Add("Content-type", "application/json; charset=utf-8")
-            res.Write([]byte(payload))
-        }
+        res.Header().Add("Content-type", "application/json; charset=utf-8")
+        res.Write([]byte(payload))
     }))
 
     client := New(srv.URL)
