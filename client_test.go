@@ -110,6 +110,15 @@ func TestHTTPSendError(t *testing.T) {
     assert.EqualError(t, err, "Get \"http://0.0.0.0:8080/\": dial tcp 0.0.0.0:8080: connect: connection refused")
 }
 
+func TestHTTPSendEncodeParametersFail(t *testing.T) {
+
+    client := Client{}
+
+    _, err := client.send("GET", "/", "a string")
+
+    assert.EqualError(t, err, "expects struct input, got string")
+}
+
 func TestGetHealth(t *testing.T) {
 
     var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
