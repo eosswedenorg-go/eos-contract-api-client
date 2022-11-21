@@ -6,6 +6,12 @@ import (
     null "gopkg.in/guregu/null.v4"
 )
 
+type UnixTime int64
+
+func (ts UnixTime) Time() time.Time {
+    return time.Unix(int64(ts) / 1000, int64(ts) % 1000).UTC()
+}
+
 // HTTP
 
 type HTTPResponse struct {
