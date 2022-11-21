@@ -315,7 +315,7 @@ func TestClient_GetAsset(t *testing.T) {
 
     var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 
-        assert.Equal(t, "/attomicaassets/v1/assets/1099667509880", req.URL.String())
+        assert.Equal(t, "/atomicassets/v1/assets/1099667509880", req.URL.String())
 
         payload := `{
             "success": true,
@@ -442,7 +442,7 @@ func TestClient_GetAssets(t *testing.T) {
 
     var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 
-        assert.Equal(t, "/attomicaassets/v1/assets?before=100&is_transferable=true&schema_name=test", req.URL.String())
+        assert.Equal(t, "/atomicassets/v1/assets?before=100&is_transferable=true&schema_name=test", req.URL.String())
 
         payload := `{
   "success": true,

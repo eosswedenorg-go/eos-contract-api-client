@@ -88,7 +88,7 @@ func (c *Client) GetAsset(asset_id string) (AssetResponse, error) {
 
     var asset AssetResponse
 
-    r, err := c.send("GET", "/attomicaassets/v1/assets/" + asset_id, nil)
+    r, err := c.send("GET", "/atomicassets/v1/assets/" + asset_id, nil)
     if err == nil {
 
         // Set HTTPStatusCode
@@ -106,7 +106,7 @@ func (c *Client) GetAssets(params AssetsRequestParams) (AssetsResponse, error) {
 
     var assets AssetsResponse
 
-    r, err := c.send("GET", "/attomicaassets/v1/assets", params)
+    r, err := c.send("GET", "/atomicassets/v1/assets", params)
     if err == nil {
 
         // Set HTTPStatusCode
