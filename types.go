@@ -4,18 +4,32 @@ package eos_contract_api_client
 import (
     "time"
     "strconv"
-    "strings"
+    "encoding/json"
 )
 
 type UnixTime int64
 
 func (ts *UnixTime) UnmarshalJSON(b []byte) error {
-    str := strings.Trim(string(b), "\"")
-    v, err := strconv.ParseInt(str, 10, 64)
-    if err != nil {
-        return err
+
+    var i int64
+
+    // "borrowed" from "gopkg.in/guregu/null.v4" abit.
+    if err := json.Unmarshal(b, &i); err != nil {
+
+        // If unmarshal to int64 fails, we assume that its a numeric string.
+        var str string
+        if err := json.Unmarshal(b, &str); err != nil {
+            return err
+        }
+
+        // Then we need to parse the string into int64
+        i, err = strconv.ParseInt(str, 10, 64)
+        if err != nil {
+            return err
+        }
     }
-    *ts = UnixTime(v)
+
+    *ts = UnixTime(i)
     return nil
 }
 
