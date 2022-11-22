@@ -117,3 +117,21 @@ func (c *Client) GetAssets(params AssetsRequestParams) (AssetsResponse, error) {
     }
     return assets, err
 }
+
+//  GetAssetLog - Fetches "/atomicassets/v1/assets/{asset_id}/logs" from API
+// ---------------------------------------------------------
+func (c *Client) GetAssetLog(asset_id string, params LogRequestParams) (AssetLogResponse, error) {
+
+    var logs AssetLogResponse
+
+    r, err := c.send("GET", "/atomicassets/v1/assets/" + asset_id + "/logs", params)
+    if err == nil {
+
+        // Set HTTPStatusCode
+        logs.HTTPStatusCode = r.StatusCode
+
+        // Parse json
+        err = r.Unmarshal(&logs)
+    }
+    return logs, err
+}

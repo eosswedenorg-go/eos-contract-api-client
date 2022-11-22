@@ -9,6 +9,14 @@ const (
     SortDescending SortOrder = "desc"
 )
 
+type LogRequestParams struct {
+    Page int                `qs:"page,omitempty"`
+    Limit int               `qs:"limit,omitempty"`
+    Order SortOrder         `qs:"order,omitempty"`
+    ActionWhitelist string  `qs:"action_whitelist,omitempty"`
+    ActionBlacklist string  `qs:"action_blacklist,omitempty"`
+}
+
 type AssetsRequestParams struct {
     CollectionName string           `qs:"collection_name,omitempty"`
     CollectionBlacklist []string    `qs:"collection_blacklist,omitempty"`

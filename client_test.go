@@ -568,3 +568,56 @@ func TestClient_GetAssets(t *testing.T) {
 
     assert.Equal(t, expected, a.Data)
 }
+
+func TestGetAssetLog(t *testing.T) {
+
+    var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+
+        assert.Equal(t, "/atomicassets/v1/assets/1099667509880/logs?limit=100&order=desc&page=1", req.URL.String())
+
+        payload := `{
+            "success":true,
+            "data":[
+                {
+                    "log_id":"41007120919",
+                    "name":"logmint",
+                    "data":{
+                        "new_asset_owner":"farmersworld",
+                        "authorized_minter":"farmersworld"
+                    },
+                    "txid":"4bac45fbb2fd4d5ee434ef0c682683834cec17711d3ab1d0fd44023de5c66ec9",
+                    "created_at_block":"171080009",
+                    "created_at_time":"1646996870500"
+                }
+            ],
+            "query_time":1669043479123
+        }`
+
+        res.Header().Add("Content-type", "application/json; charset=utf-8")
+        res.Write([]byte(payload))
+    }))
+
+    client := New(srv.URL)
+
+    res, err := client.GetAssetLog("1099667509880", LogRequestParams{Page: 1, Limit: 100, Order: SortDescending})
+
+    require.NoError(t, err)
+    assert.Equal(t, 200, res.HTTPStatusCode)
+    assert.True(t, res.Success)
+    assert.Equal(t, time.Date(2022, time.November, 21, 15, 11, 19, 123, time.UTC), res.QueryTime.Time())
+
+    expected := []Log{
+        {
+            ID: "41007120919",
+            Name: "logmint",
+            Data: map[string]interface{}{
+                "new_asset_owner": "farmersworld",
+                "authorized_minter": "farmersworld",
+            },
+            CreatedAtBlock: "171080009",
+            CreatedAtTime: UnixTime(1646996870500),
+        },
+    }
+
+    assert.Equal(t, expected, res.Data)
+}

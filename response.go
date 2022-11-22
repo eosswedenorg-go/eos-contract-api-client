@@ -45,3 +45,8 @@ type AssetsResponse struct {
     APIResponse
     Data []Asset
 }
+
+type AssetLogResponse struct {
+    APIResponse
+    Data []Log
+}
