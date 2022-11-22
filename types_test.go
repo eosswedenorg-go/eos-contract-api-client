@@ -54,7 +54,11 @@ func TestUnixTime_UnmarshalJson(t *testing.T) {
             var ts UnixTime
 
             if err := ts.UnmarshalJSON(tt.input); (err != nil) != tt.expectErr {
-                t.Errorf("UnixTime.UnmarshalJSON(%s) expected error but got <nil>", string(tt.input))
+                s := "did not expect"
+                if tt.expectErr {
+                    s = "expected"
+                }
+                t.Errorf("UnixTime.UnmarshalJSON(%s) %s error but got: %v", string(tt.input), s, err)
             }
 
             if ts != tt.expected {
