@@ -45,6 +45,7 @@ func TestUnixTime_UnmarshalJson(t *testing.T) {
         { "number nanoseconds", []byte("1800718379432"), false, UnixTime(1800718379432) },
         { "string", []byte("\"1476870484\""), false, UnixTime(1476870484) },
         { "string nanoseconds", []byte("\"1440894197834\""), false, UnixTime(1440894197834) },
+        { "null string", []byte("null"), false, UnixTime(0) },
         { "random", []byte{0x1, 0xff, 0x3c}, true, UnixTime(0) },
     }
 
