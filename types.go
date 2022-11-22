@@ -34,7 +34,9 @@ func (ts *UnixTime) UnmarshalJSON(b []byte) error {
 }
 
 func (ts UnixTime) Time() time.Time {
-    return time.Unix(int64(ts) / 1000, int64(ts) % 1000).UTC()
+
+    v := int64(ts)
+    return time.Unix(v / 1000, v % 1000).UTC()
 }
 
 
