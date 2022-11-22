@@ -1,6 +1,14 @@
 
 package eos_contract_api_client
 
+type SortOrder string
+
+const (
+    SortNone SortOrder = ""
+    SortAscending SortOrder = "asc"
+    SortDescending SortOrder = "desc"
+)
+
 type AssetsRequestParams struct {
     CollectionName string           `qs:"collection_name,omitempty"`
     CollectionBlacklist []string    `qs:"collection_blacklist,omitempty"`
