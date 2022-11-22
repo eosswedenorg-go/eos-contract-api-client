@@ -48,7 +48,8 @@ type HealthData struct {
     Chain ChainHealth       `json:"chain"`
 }
 
-// Token Type
+// Basic types
+
 type Token struct {
     Contract string `json:"token_contract"`
     Symbol string   `json:"token_symbol"`
@@ -56,7 +57,16 @@ type Token struct {
     Amount string   `json:"amount"`
 }
 
-// Asset type
+type Log struct {
+    ID string                               `json:"log_id"`
+    Name string                             `json:"name"`
+    Data map[string]interface{}             `json:"data"`
+    CreatedAtBlock string                   `json:"created_at_block"`
+    CreatedAtTime UnixTime                  `json:"created_at_time"`
+}
+
+
+// Asset types
 
 type Asset struct {
     ID string                               `json:"asset_id"`
@@ -135,13 +145,51 @@ type AssetSale struct {
     BlockTime UnixTime          `json:"block_time"`
 }
 
-type Log struct {
-    ID string                               `json:"log_id"`
-    Name string                             `json:"name"`
-    Data map[string]interface{}             `json:"data"`
-    CreatedAtBlock string                   `json:"created_at_block"`
-    CreatedAtTime UnixTime                  `json:"created_at_time"`
+// Collection type
+
+type Collection struct {
+    CollectionName string       `json:"collection_name"`
+    Contract string             `json:"contract"`
+    Name string                 `json:"name"`
+    Author string               `json:"author"`
+    AllowNotify bool            `json:"allow_notify"`
+    AuthorizedAccounts []string `json:"authorized_accounts"`
+    NotifyAccounts []string     `json:"notify_accounts"`
+    MarketFee float64           `json:"market_fee"`
+    CreatedAtBlock string       `json:"created_at_block"`
+    CreatedAtTime string        `json:"created_at_time"`
 }
+
+// Schema types
+
+type Schema struct {
+    Name string             `json:"schema_name"`
+    Contract string         `json:"contract"`
+    Format []SchemaFormat   `json:"format"`
+    CreatedAtBlock string   `json:"created_at_block"`
+    CreatedAtTime string    `json:"created_at_time"`
+}
+
+type SchemaFormat struct {
+    Name string `json:"name"`
+    Type string `json:"type"`
+}
+
+// Template types
+
+type Template struct {
+    ID string                               `json:"template_id"`
+    Contract string                         `json:"contract"`
+    MaxSupply string                        `json:"max_supply"`
+    IssuedSupply string                     `json:"issued_supply"`
+    IsTransferable bool                     `json:"is_transferable"`
+    IsBurnable bool                         `json:"is_burnable"`
+    ImmutableData map[string]interface{}    `json:"immutable_data"`
+    CreatedAtBlock string                   `json:"created_at_block"`
+    CreatedAtTime string                    `json:"created_at_time"`
+}
+
+// Offer types
 
 type Offer struct {
     ID string                   `json:"offer_id"`
@@ -197,6 +245,8 @@ type BuyOffer struct {
     CreatedAtTime UnixTime      `Json:"created_at_time"`
 }
 
+// Transfer types
+
 type Transfer struct {
     ID string                   `json:"transfer_id"`
     Contract string             `json:"contract"`
@@ -219,6 +269,8 @@ type ListingTransfer struct {
     CreatedAtTime UnixTime      `Json:"created_at_time"`
 }
 
+// Sale types
+
 type Sale struct {
     ID string                   `json:"sales_id"`
     MarketContract string       `json:"market_contract"`
@@ -240,10 +292,23 @@ type Sale struct {
     CreatedAtTime UnixTime      `Json:"created_at_time"`
 }
 
+// Action types
+
 type Auction struct {
     ID string               `json:"action_id"`
     MarketContract string   `json:"market_contract"`
 }
+
+// Marketplace types
+
+type MarketPlace struct {
+    Name string                 `json:"marketplace_name"`
+    Creator string              `json:"creator"`
+    CreatedAtBlock string       `json:"created_at_block"`
+    CreatedAtTime UnixTime      `Json:"created_at_time"`
+}
+
+// Price types
 
 type Price struct {
     Average	string          `json:"average"`
@@ -254,19 +319,16 @@ type Price struct {
     Sales string            `json:"sales"`
     SuggestedAverage string `json:"suggested_average"`
     SuggestedMedian	string  `json:"suggested_median"`
-    Token struct {
-        Contract string     `json:"token_contract"`
-        Symbol string       `json:"token_symbol"`
-        Precision int       `json:"token_precision"`
-    }                       `json:"token"`
+    Token PriceToken        `json:"token"`
 }
 
-type MarketPlace struct {
-    Name string                 `json:"marketplace_name"`
-    Creator string              `json:"creator"`
-    CreatedAtBlock string       `json:"created_at_block"`
-    CreatedAtTime UnixTime      `Json:"created_at_time"`
+type PriceToken struct {
+    Contract string     `json:"token_contract"`
+    Symbol string       `json:"token_symbol"`
+    Precision int       `json:"token_precision"`
 }
+
+// Link types
 
 type Link struct {
     ID string               `json:"link_id"`
@@ -281,46 +343,4 @@ type Link struct {
     Assets []Asset          `json:"assets"`
     CreatedAtBlock string   `json:"created_at_block"`
     CreatedAtTime UnixTime  `Json:"created_at_time"`
-}
-
-// Schema type
-
-type SchemaFormat struct {
-    Name string `json:"name"`
-    Type string `json:"type"`
-}
-
-type Schema struct {
-    Name string             `json:"schema_name"`
-    Contract string         `json:"contract"`
-    Format []SchemaFormat   `json:"format"`
-    CreatedAtBlock string   `json:"created_at_block"`
-    CreatedAtTime string    `json:"created_at_time"`
-}
-
-// Collection type
-
-type Collection struct {
-    CollectionName string       `json:"collection_name"`
-    Contract string             `json:"contract"`
-    Name string                 `json:"name"`
-    Author string               `json:"author"`
-    AllowNotify bool            `json:"allow_notify"`
-    AuthorizedAccounts []string `json:"authorized_accounts"`
-    NotifyAccounts []string     `json:"notify_accounts"`
-    MarketFee float64           `json:"market_fee"`
-    CreatedAtBlock string       `json:"created_at_block"`
-    CreatedAtTime string        `json:"created_at_time"`
-}
-
-type Template struct {
-    ID string                               `json:"template_id"`
-    Contract string                         `json:"contract"`
-    MaxSupply string                        `json:"max_supply"`
-    IssuedSupply string                     `json:"issued_supply"`
-    IsTransferable bool                     `json:"is_transferable"`
-    IsBurnable bool                         `json:"is_burnable"`
-    ImmutableData map[string]interface{}    `json:"immutable_data"`
-    CreatedAtBlock string                   `json:"created_at_block"`
-    CreatedAtTime string                    `json:"created_at_time"`
 }
