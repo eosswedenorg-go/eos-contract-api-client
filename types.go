@@ -3,9 +3,21 @@ package eos_contract_api_client
 
 import (
     "time"
+    "strconv"
+    "strings"
 )
 
 type UnixTime int64
+
+func (ts *UnixTime) UnmarshalJSON(b []byte) error {
+    str := strings.Trim(string(b), "\"")
+    v, err := strconv.ParseInt(str, 10, 64)
+    if err != nil {
+        return err
+    }
+    *ts = UnixTime(v)
+    return nil
+}
 
 func (ts UnixTime) Time() time.Time {
     return time.Unix(int64(ts) / 1000, int64(ts) % 1000).UTC()
