@@ -1,59 +1,58 @@
-
 package eos_contract_api_client
 
 import (
-    null "gopkg.in/guregu/null.v4"
+	null "gopkg.in/guregu/null.v4"
 )
 
 // HTTP
 
 type HTTPResponse struct {
-    HTTPStatusCode int
+	HTTPStatusCode int
 }
 
 func (resp *HTTPResponse) IsError() bool {
-    return resp.HTTPStatusCode == 0 || resp.HTTPStatusCode > 399
+	return resp.HTTPStatusCode == 0 || resp.HTTPStatusCode > 399
 }
 
 // API
 
 type APIError struct {
-    Success null.Bool    `json:"success"`
-    Message null.String  `json:"message"`
+	Success null.Bool   `json:"success"`
+	Message null.String `json:"message"`
 }
 
 type APIResponse struct {
-    HTTPResponse
-    Success bool        `json:"success"`
-    QueryTime UnixTime  `json:"query_time"`
+	HTTPResponse
+	Success   bool     `json:"success"`
+	QueryTime UnixTime `json:"query_time"`
 }
 
 // Health
 type Health struct {
-    APIResponse
-    Data HealthData
+	APIResponse
+	Data HealthData
 }
 
 // Assets
 
 type AssetResponse struct {
-    APIResponse
-    Data Asset
+	APIResponse
+	Data Asset
 }
 
 type AssetsResponse struct {
-    APIResponse
-    Data []Asset
+	APIResponse
+	Data []Asset
 }
 
 type AssetLogResponse struct {
-    APIResponse
-    Data []Log
+	APIResponse
+	Data []Log
 }
 
 // Sales
 
 type SalesResponse struct {
-    APIResponse
-    Data []AssetSale
+	APIResponse
+	Data []AssetSale
 }
