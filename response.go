@@ -50,3 +50,10 @@ type AssetLogResponse struct {
     APIResponse
     Data []Log
 }
+
+// Sales
+
+type SalesResponse struct {
+    APIResponse
+    Data []AssetSale
+}

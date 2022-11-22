@@ -48,3 +48,10 @@ type AssetsRequestParams struct {
     Order string                    `qs:"order,omitempty"`
     Sort string                     `qs:"sort,omitempty"`
 }
+
+type AssetSalesRequestParams struct {
+    Buyer string    `qs:"buyer,omitempty"`
+    Seller string   `qs:"seller,omitempty"`
+    Symbol string   `qs:"symbol,omitempty"`
+    Order SortOrder `qs:"order,omitempty"`
+}

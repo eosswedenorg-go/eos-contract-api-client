@@ -621,3 +621,195 @@ func TestGetAssetLog(t *testing.T) {
 
     assert.Equal(t, expected, res.Data)
 }
+
+func TestGetAssetSale(t *testing.T) {
+
+    var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+
+        assert.Equal(t, "/atomicmarket/v1/assets/1099563680227/sales?order=desc", req.URL.String())
+
+        payload := `{
+            "success": true,
+            "data": [
+              {
+                "market_contract": "atomicmarket",
+                "sale_id": "35230996",
+                "auction_id": null,
+                "buyoffer_id": null,
+                "token_symbol": "WAX",
+                "token_precision": 8,
+                "token_contract": "eosio.token",
+                "price": "85000000",
+                "seller": "rixcm.wam",
+                "buyer": "pnbse.wam",
+                "block_time": "1633004737000"
+              },
+              {
+                "market_contract": "atomicmarket",
+                "sale_id": "31692801",
+                "auction_id": null,
+                "buyoffer_id": null,
+                "token_symbol": "WAX",
+                "token_precision": 8,
+                "token_contract": "eosio.token",
+                "price": "9000000",
+                "seller": "ryuri.wam",
+                "buyer": "rixcm.wam",
+                "block_time": "1630481160000"
+              }
+            ],
+            "query_time": 1669121848963
+          }`
+
+        res.Header().Add("Content-type", "application/json; charset=utf-8")
+        res.Write([]byte(payload))
+    }))
+
+    client := New(srv.URL)
+
+    res, err := client.GetAssetSales("1099563680227", AssetSalesRequestParams{Order: SortDescending})
+
+    require.NoError(t, err)
+    assert.Equal(t, 200, res.HTTPStatusCode)
+    assert.True(t, res.Success)
+    assert.Equal(t, time.Date(2022, time.November, 22, 12, 57, 28, 963, time.UTC), res.QueryTime.Time())
+
+    expected := []AssetSale{
+        {
+            ID: "35230996",
+            MarketContract: "atomicmarket",
+            TokenSymbol: "WAX",
+            TokenPrecision: 8,
+            TokenContract: "eosio.token",
+            Price: "85000000",
+            Seller: "rixcm.wam",
+            Buyer: "pnbse.wam",
+            BlockTime: 1633004737000,
+        },
+        {
+            ID: "31692801",
+            MarketContract: "atomicmarket",
+            TokenSymbol: "WAX",
+            TokenPrecision: 8,
+            TokenContract: "eosio.token",
+            Price: "9000000",
+            Seller: "ryuri.wam",
+            Buyer: "rixcm.wam",
+            BlockTime: 1630481160000,
+        },
+    }
+
+    assert.Equal(t, expected, res.Data)
+}
+
+func TestGetAssetSaleFilterSeller(t *testing.T) {
+
+    var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+
+        assert.Equal(t, "/atomicmarket/v1/assets/1099563680227/sales?order=asc&seller=rixcm.wam", req.URL.String())
+
+        payload := `{
+            "success": true,
+            "data": [
+              {
+                "market_contract": "atomicmarket",
+                "sale_id": "35230996",
+                "auction_id": null,
+                "buyoffer_id": null,
+                "token_symbol": "WAX",
+                "token_precision": 8,
+                "token_contract": "eosio.token",
+                "price": "85000000",
+                "seller": "rixcm.wam",
+                "buyer": "pnbse.wam",
+                "block_time": "1633004737000"
+              }
+            ],
+            "query_time": 1669121848963
+          }`
+
+        res.Header().Add("Content-type", "application/json; charset=utf-8")
+        res.Write([]byte(payload))
+    }))
+
+    client := New(srv.URL)
+
+    res, err := client.GetAssetSales("1099563680227", AssetSalesRequestParams{Seller: "rixcm.wam", Order: SortAscending})
+
+    require.NoError(t, err)
+    assert.Equal(t, 200, res.HTTPStatusCode)
+    assert.True(t, res.Success)
+    assert.Equal(t, time.Date(2022, time.November, 22, 12, 57, 28, 963, time.UTC), res.QueryTime.Time())
+
+    expected := []AssetSale{
+        {
+            ID: "35230996",
+            MarketContract: "atomicmarket",
+            TokenSymbol: "WAX",
+            TokenPrecision: 8,
+            TokenContract: "eosio.token",
+            Price: "85000000",
+            Seller: "rixcm.wam",
+            Buyer: "pnbse.wam",
+            BlockTime: 1633004737000,
+        },
+    }
+
+    assert.Equal(t, expected, res.Data)
+}
+
+func TestGetAssetSaleFilterBuyer(t *testing.T) {
+
+    var srv = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+
+        assert.Equal(t, "/atomicmarket/v1/assets/1099563680227/sales?buyer=rixcm.wam", req.URL.String())
+
+        payload := `{
+            "success": true,
+            "data": [
+              {
+                "market_contract": "atomicmarket",
+                "sale_id": "31692801",
+                "auction_id": null,
+                "buyoffer_id": null,
+                "token_symbol": "WAX",
+                "token_precision": 8,
+                "token_contract": "eosio.token",
+                "price": "9000000",
+                "seller": "ryuri.wam",
+                "buyer": "rixcm.wam",
+                "block_time": "1630481160000"
+              }
+            ],
+            "query_time": 1669121848963
+          }`
+
+        res.Header().Add("Content-type", "application/json; charset=utf-8")
+        res.Write([]byte(payload))
+    }))
+
+    client := New(srv.URL)
+
+    res, err := client.GetAssetSales("1099563680227", AssetSalesRequestParams{Buyer: "rixcm.wam"})
+
+    require.NoError(t, err)
+    assert.Equal(t, 200, res.HTTPStatusCode)
+    assert.True(t, res.Success)
+    assert.Equal(t, time.Date(2022, time.November, 22, 12, 57, 28, 963, time.UTC), res.QueryTime.Time())
+
+    expected := []AssetSale{
+        {
+            ID: "31692801",
+            MarketContract: "atomicmarket",
+            TokenSymbol: "WAX",
+            TokenPrecision: 8,
+            TokenContract: "eosio.token",
+            Price: "9000000",
+            Seller: "ryuri.wam",
+            Buyer: "rixcm.wam",
+            BlockTime: 1630481160000,
+        },
+    }
+
+    assert.Equal(t, expected, res.Data)
+}

@@ -135,3 +135,21 @@ func (c *Client) GetAssetLog(asset_id string, params LogRequestParams) (AssetLog
     }
     return logs, err
 }
+
+//  GetAssetSales - Fetches "/atomicmarket/v1/assets/{asset_id}/sales" from API
+// ---------------------------------------------------------
+func (c *Client) GetAssetSales(asset_id string, params AssetSalesRequestParams) (SalesResponse, error) {
+
+    var sales SalesResponse
+
+    r, err := c.send("GET", "/atomicmarket/v1/assets/" + asset_id + "/sales", params)
+    if err == nil {
+
+        // Set HTTPStatusCode
+        sales.HTTPStatusCode = r.StatusCode
+
+        // Parse json
+        err = r.Unmarshal(&sales)
+    }
+    return sales, err
+}

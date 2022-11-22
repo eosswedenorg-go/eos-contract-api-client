@@ -121,6 +121,20 @@ type ListingAsset struct {
     Prices []Price                          `json:"prices"`
 }
 
+type AssetSale struct {
+    ID string                   `json:"sale_id"`
+    MarketContract string       `json:"market_contract"`
+    AuctionID string            `json:"auction_id"`
+    BuyOfferID string           `json:"buyoffer_id"`
+    Price string                `json:"price"`
+    TokenSymbol string          `json:"token_symbol"`
+    TokenPrecision int64        `json:"token_precision"`
+    TokenContract string        `json:"token_contract"`
+    Seller string               `json:"seller"`
+    Buyer string                `json:"buyer"`
+    BlockTime UnixTime          `json:"block_time"`
+}
+
 type Log struct {
     ID string                               `json:"log_id"`
     Name string                             `json:"name"`
