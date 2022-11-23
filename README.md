@@ -1,54 +1,5 @@
-# EOSIO Contract API Client
+# Important!
 
-This package aims to implement a client for Pinknetwork's [eosio contract api](https://github.com/pinknetworkx/eosio-contract-api) in go.
+This project is moved to [eosswedenorg-go/atomicasset](https://github.com/eosswedenorg-go/atomicasset) and only exists here for backward compatibility.
 
-### Install package
-
-``` bash
-go get -u github.com/eosswedenorg-go/eosio-contract-api-client@latest
-```
-
-### Types
-
-#### API Client struct
-
-```go
-type Client struct {
-
-    // API Endpoint url.
-    Url string
-
-    // Optional Host header to send to the api.
-    Host string
-}
-```
-
-#### Health struct
-
-```go
-type Health struct {
-    HTTPStatusCode int
-    Success bool
-    Data HealthData
-    QueryTime time.Time
-}
-
-```
-
-### Functions
-
-```go
-func New(url string) *Client
-```
-
-Construct a new API Client
-
-```go
-func (c Client) GetHealth(params ReqParams) (Health, error)
-```
-
-Call `/health` and return the results.
-
-### Author
-
-Henrik Hautakoski - [Sw/eden](https://eossweden.org/) - [henrik@eossweden.org](mailto:henrik@eossweden.org)
+Never use this code in a new project!
